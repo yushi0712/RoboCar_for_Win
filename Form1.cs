@@ -21,6 +21,10 @@ namespace RoboCar {
 		MqttSslProtocols Ssl = new MqttSslProtocols();
 		MqttClient mqttClient = null;
 		string		ClientId = "";
+		string mqttTopic_Sensor = "KM/Sensor";
+		string mqttTopic_Command= "KM/Command";
+		string mqttTopic_Query = "KM/Query";
+		string mqttTopic_Param = "KM/Param";
 
 		public class Json_Sensor {
 			public float AxlDiff { get; set; }
@@ -28,6 +32,13 @@ namespace RoboCar {
 			public float Bright { get; set; }
 			public float Prox { get; set; }
 			public float P_Score { get; set; }
+		}
+		public class Json_Param{
+			public string MtSpd { get; set; }
+			public string MtSpd_LT { get; set; }
+			public string MtSpd_RT { get; set; }
+			public string MtLv_LT { get; set; }
+			public string MtLv_RT { get; set; }
 		}
 
 		public Form1() {
@@ -39,7 +50,8 @@ namespace RoboCar {
 			mqttClient.MqttMsgPublishReceived += OnRecieveMqttTopic;
 
 			// 受信するメッセージのトピック、QoSレベルを指定して、メッセージ受信待ち状態に入る
-			mqttClient.Subscribe(new string[] { "KM/Sensor" }, new byte[] { 2 });
+			mqttClient.Subscribe(new string[] { mqttTopic_Sensor }, new byte[] { 2 });
+			mqttClient.Subscribe(new string[] { mqttTopic_Param}, new byte[] { 2 });
 
 
 			ClientId = Guid.NewGuid().ToString();
@@ -48,31 +60,34 @@ namespace RoboCar {
 
 		private void btn_Debug1_Click(object sender, EventArgs e) 
 		{
-			string json = "{\"AxlDiff\":0.21,\"Name\":\"Kato Jun\"}";
-			var serializer = new DataContractJsonSerializer(typeof(Json_Sensor));
-
-			using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json))) {
-				ms.Position = 0;
-				var deserialized = (Json_Sensor)serializer.ReadObject(ms);
-				Console.WriteLine("AxlDiff : {0}", deserialized.AxlDiff);  // 31		
-			}
+			string Payload = "{\"Id\":\"Param\"}";
+			mqttClient.Publish(mqttTopic_Query, Encoding.UTF8.GetBytes(Payload), 0, false);
 		}
 
-		private void AddItem_ThreadSafe(ListViewItem lvi)
+		private void AddItem_ThreadSafe(ListViewItem lvi) 
 		{
 			listView_Sensor.Items.Add(lvi);
-			listView_Sensor.EnsureVisible(listView_Sensor.Items.Count-1);
+			listView_Sensor.EnsureVisible(listView_Sensor.Items.Count - 1);
+		}
+
+		private void UpdateParam_ThreadSafe(Json_Param Param) 
+		{
+			txtBox_MotorSpeed.Text = Param.MtSpd;
+			txtBox_MotorSpeed_LeftTurn.Text = Param.MtSpd_LT;
+			txtBox_MotorSpeed_RightTurn.Text = Param.MtSpd_RT;
+			txtBox_LrLevel_LeftTurn.Text = Param.MtLv_LT;
+			txtBox_LrLevel_RightTurn.Text = Param.MtLv_RT;
 		}
 
 		delegate void delegate1(ListViewItem lvi);
+		delegate void delegate2(Json_Param Param);
 		private void OnRecieveMqttTopic(object sender, MqttMsgPublishEventArgs e)
 		{
-			if(e.Topic == "KM/Sensor") {
+			if (e.Topic == mqttTopic_Sensor) {
 				var serializer = new DataContractJsonSerializer(typeof(Json_Sensor));
 				using (var ms = new MemoryStream(e.Message)) {
 					ms.Position = 0;
 					var deserialized = (Json_Sensor)serializer.ReadObject(ms);
-					Console.WriteLine("AxlDiff : {0}", deserialized.AxlDiff);  // 31		
 
 					ListViewItem lvi = new ListViewItem(deserialized.AxlDiff.ToString("F2"));
 					lvi.SubItems.Add(deserialized.Temp.ToString("F2"));
@@ -81,6 +96,15 @@ namespace RoboCar {
 					lvi.SubItems.Add(deserialized.P_Score.ToString("F2"));
 
 					Invoke(new delegate1(AddItem_ThreadSafe), lvi);
+				}
+			}
+			else if (e.Topic == mqttTopic_Param) {
+				var serializer = new DataContractJsonSerializer(typeof(Json_Param));
+				using (var ms = new MemoryStream(e.Message)) {
+					ms.Position = 0;
+					var deserialized = (Json_Param)serializer.ReadObject(ms);
+					Console.WriteLine("MtSpd : {0}", deserialized.MtSpd);
+					Invoke(new delegate2(UpdateParam_ThreadSafe), deserialized);
 				}
 			}
 		}
@@ -94,8 +118,7 @@ namespace RoboCar {
 								int.Parse(txtBox_MotorSpeed_LeftTurn.Text), int.Parse(txtBox_MotorSpeed_RightTurn.Text),
 								int.Parse(txtBox_LrLevel_LeftTurn.Text), int.Parse(txtBox_LrLevel_RightTurn.Text));
 			Payload += "}";
-			MessageBox.Show(Payload);
-			mqttClient.Publish("KM/Command", Encoding.UTF8.GetBytes(Payload), 0, false);
+			mqttClient.Publish(mqttTopic_Command, Encoding.UTF8.GetBytes(Payload), 0, false);
 		}
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e) {

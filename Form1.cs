@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.IO;
 
 namespace RoboCar {
 	public partial class Form1 : Form 
@@ -20,14 +21,13 @@ namespace RoboCar {
 		MqttSslProtocols Ssl = new MqttSslProtocols();
 		MqttClient mqttClient = null;
 		string		ClientId = "";
-	
-		[DataContract]
-		public class JsonItem {
-			[DataMember(Name = "name")]
-			public string Name { get; set; }
 
-			[DataMember(Name = "Id")]
-			public string Id { get; set; }
+		public class Json_Sensor {
+			public float AxlDiff { get; set; }
+			public float Temp { get; set; }
+			public float Bright { get; set; }
+			public float Prox { get; set; }
+			public float P_Score { get; set; }
 		}
 
 		public Form1() {
@@ -48,13 +48,41 @@ namespace RoboCar {
 
 		private void btn_Debug1_Click(object sender, EventArgs e) 
 		{
+			string json = "{\"AxlDiff\":0.21,\"Name\":\"Kato Jun\"}";
+			var serializer = new DataContractJsonSerializer(typeof(Json_Sensor));
 
+			using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json))) {
+				ms.Position = 0;
+				var deserialized = (Json_Sensor)serializer.ReadObject(ms);
+				Console.WriteLine("AxlDiff : {0}", deserialized.AxlDiff);  // 31		
+			}
 		}
 
+		private void AddItem_ThreadSafe(ListViewItem lvi)
+		{
+			listView_Sensor.Items.Add(lvi);
+			listView_Sensor.EnsureVisible(listView_Sensor.Items.Count-1);
+		}
+
+		delegate void delegate1(ListViewItem lvi);
 		private void OnRecieveMqttTopic(object sender, MqttMsgPublishEventArgs e)
 		{
-			Console.WriteLine(e.Topic);
-			Console.WriteLine(Encoding.UTF8.GetString(e.Message));
+			if(e.Topic == "KM/Sensor") {
+				var serializer = new DataContractJsonSerializer(typeof(Json_Sensor));
+				using (var ms = new MemoryStream(e.Message)) {
+					ms.Position = 0;
+					var deserialized = (Json_Sensor)serializer.ReadObject(ms);
+					Console.WriteLine("AxlDiff : {0}", deserialized.AxlDiff);  // 31		
+
+					ListViewItem lvi = new ListViewItem(deserialized.AxlDiff.ToString("F2"));
+					lvi.SubItems.Add(deserialized.Temp.ToString("F2"));
+					lvi.SubItems.Add(deserialized.Bright.ToString("F2"));
+					lvi.SubItems.Add(deserialized.Prox.ToString("F2"));
+					lvi.SubItems.Add(deserialized.P_Score.ToString("F2"));
+
+					Invoke(new delegate1(AddItem_ThreadSafe), lvi);
+				}
+			}
 		}
 
 		private void btn_Send_Click(object sender, EventArgs e) 
@@ -68,6 +96,16 @@ namespace RoboCar {
 			Payload += "}";
 			MessageBox.Show(Payload);
 			mqttClient.Publish("KM/Command", Encoding.UTF8.GetBytes(Payload), 0, false);
+		}
+
+		private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+			mqttClient.Disconnect();
+		}
+
+		private void btn_ClearList_Click(object sender, EventArgs e) 
+		{
+			listView_Sensor.Items.Clear();
+
 		}
 	}
 }

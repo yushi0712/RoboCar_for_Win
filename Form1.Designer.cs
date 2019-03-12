@@ -45,11 +45,14 @@
 			this.column_Temp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.column_Bright = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.column_Prox = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.btn_ClearList = new System.Windows.Forms.Button();
+			this.column_Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.column_P_Score = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.SuspendLayout();
 			// 
 			// btn_Debug1
 			// 
-			this.btn_Debug1.Location = new System.Drawing.Point(158, 311);
+			this.btn_Debug1.Location = new System.Drawing.Point(32, 268);
 			this.btn_Debug1.Name = "btn_Debug1";
 			this.btn_Debug1.Size = new System.Drawing.Size(75, 23);
 			this.btn_Debug1.TabIndex = 0;
@@ -189,7 +192,7 @@
 			// 
 			// btn_Send
 			// 
-			this.btn_Send.Location = new System.Drawing.Point(133, 242);
+			this.btn_Send.Location = new System.Drawing.Point(165, 304);
 			this.btn_Send.Name = "btn_Send";
 			this.btn_Send.Size = new System.Drawing.Size(123, 49);
 			this.btn_Send.TabIndex = 14;
@@ -200,10 +203,12 @@
 			// listView_Sensor
 			// 
 			this.listView_Sensor.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.column_Time,
             this.column_Axl,
             this.column_Temp,
             this.column_Bright,
-            this.column_Prox});
+            this.column_Prox,
+            this.column_P_Score});
 			this.listView_Sensor.GridLines = true;
 			this.listView_Sensor.Location = new System.Drawing.Point(323, 33);
 			this.listView_Sensor.Name = "listView_Sensor";
@@ -215,27 +220,47 @@
 			// column_Axl
 			// 
 			this.column_Axl.Text = "衝撃";
+			this.column_Axl.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// column_Temp
 			// 
 			this.column_Temp.Text = "温度";
-			this.column_Temp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.column_Temp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// column_Bright
 			// 
 			this.column_Bright.Text = "照度";
-			this.column_Bright.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.column_Bright.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// column_Prox
 			// 
 			this.column_Prox.Text = "近接";
-			this.column_Prox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.column_Prox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// btn_ClearList
+			// 
+			this.btn_ClearList.Location = new System.Drawing.Point(688, 33);
+			this.btn_ClearList.Name = "btn_ClearList";
+			this.btn_ClearList.Size = new System.Drawing.Size(97, 27);
+			this.btn_ClearList.TabIndex = 16;
+			this.btn_ClearList.Text = "Clear";
+			this.btn_ClearList.UseVisualStyleBackColor = true;
+			this.btn_ClearList.Click += new System.EventHandler(this.btn_ClearList_Click);
+			// 
+			// column_Time
+			// 
+			this.column_Time.Text = "";
+			// 
+			// column_P_Score
+			// 
+			this.column_P_Score.Text = "P-Score";
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(772, 365);
+			this.ClientSize = new System.Drawing.Size(797, 365);
+			this.Controls.Add(this.btn_ClearList);
 			this.Controls.Add(this.listView_Sensor);
 			this.Controls.Add(this.btn_Send);
 			this.Controls.Add(this.label10);
@@ -256,6 +281,7 @@
 			this.Controls.Add(this.btn_Debug1);
 			this.Name = "Form1";
 			this.Text = "Form1";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -285,6 +311,9 @@
 		private System.Windows.Forms.ColumnHeader column_Temp;
 		private System.Windows.Forms.ColumnHeader column_Bright;
 		private System.Windows.Forms.ColumnHeader column_Prox;
+		private System.Windows.Forms.Button btn_ClearList;
+		private System.Windows.Forms.ColumnHeader column_Time;
+		private System.Windows.Forms.ColumnHeader column_P_Score;
 	}
 }
 

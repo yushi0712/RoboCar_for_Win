@@ -11,9 +11,10 @@ using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Runtime.Serialization.Json;
 using System.IO;
+using System.Threading;
 
 namespace RoboCar {
-	public partial class Form1 : Form 
+	public partial class RoboCar : Form 
 	{
 		// HIVE MQ の brokerを指定して、クライアントを作成
 		System.Security.Cryptography.X509Certificates.X509Certificate caCert = new System.Security.Cryptography.X509Certificates.X509Certificate();
@@ -34,14 +35,14 @@ namespace RoboCar {
 			public float P_Score { get; set; }
 		}
 		public class Json_Param{
-			public string MtSpd { get; set; }
-			public string MtSpd_LT { get; set; }
-			public string MtSpd_RT { get; set; }
-			public string MtLv_LT { get; set; }
-			public string MtLv_RT { get; set; }
+			public int MtSpd { get; set; }
+			public int MtSpd_LT { get; set; }
+			public int MtSpd_RT { get; set; }
+			public int MtLv_LT { get; set; }
+			public int MtLv_RT { get; set; }
 		}
 
-		public Form1() {
+		public RoboCar() {
 			InitializeComponent();
 
 			mqttClient = new MqttClient("m16.cloudmqtt.com", 17555, false, caCert, Ssl);
@@ -58,11 +59,6 @@ namespace RoboCar {
 			mqttClient.Connect(ClientId, "vsscjrry", "kurgC_M_VZmF");
 		}
 
-		private void btn_Debug1_Click(object sender, EventArgs e) 
-		{
-			string Payload = "{\"Id\":\"Param\"}";
-			mqttClient.Publish(mqttTopic_Query, Encoding.UTF8.GetBytes(Payload), 0, false);
-		}
 
 		private void AddItem_ThreadSafe(ListViewItem lvi) 
 		{
@@ -72,11 +68,11 @@ namespace RoboCar {
 
 		private void UpdateParam_ThreadSafe(Json_Param Param) 
 		{
-			txtBox_MotorSpeed.Text = Param.MtSpd;
-			txtBox_MotorSpeed_LeftTurn.Text = Param.MtSpd_LT;
-			txtBox_MotorSpeed_RightTurn.Text = Param.MtSpd_RT;
-			txtBox_LrLevel_LeftTurn.Text = Param.MtLv_LT;
-			txtBox_LrLevel_RightTurn.Text = Param.MtLv_RT;
+			txtBox_MotorSpeed.Text = Param.MtSpd.ToString();
+			txtBox_MotorSpeed_LeftTurn.Text = Param.MtSpd_LT.ToString();
+			txtBox_MotorSpeed_RightTurn.Text = Param.MtSpd_RT.ToString();
+			txtBox_LrLevel_LeftTurn.Text = Param.MtLv_LT.ToString();
+			txtBox_LrLevel_RightTurn.Text = Param.MtLv_RT.ToString();
 		}
 
 		delegate void delegate1(ListViewItem lvi);
@@ -89,7 +85,8 @@ namespace RoboCar {
 					ms.Position = 0;
 					var deserialized = (Json_Sensor)serializer.ReadObject(ms);
 
-					ListViewItem lvi = new ListViewItem(deserialized.AxlDiff.ToString("F2"));
+					ListViewItem lvi = new ListViewItem("");
+					lvi.SubItems.Add(deserialized.AxlDiff.ToString("F2"));
 					lvi.SubItems.Add(deserialized.Temp.ToString("F2"));
 					lvi.SubItems.Add(deserialized.Bright.ToString("F2"));
 					lvi.SubItems.Add(deserialized.Prox.ToString("F2"));
@@ -123,12 +120,25 @@ namespace RoboCar {
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
 			mqttClient.Disconnect();
+			Thread.Sleep(500);
 		}
 
+		//===== "Clear"ボタン押下 =====
 		private void btn_ClearList_Click(object sender, EventArgs e) 
 		{
 			listView_Sensor.Items.Clear();
 
+		}
+
+		//===== "Get motor param"ボタン押下 =====
+		private void btn_GetMotorParam_Click(object sender, EventArgs e) 
+		{
+			string Payload = "{\"Id\":\"Param\"}";
+			mqttClient.Publish(mqttTopic_Query, Encoding.UTF8.GetBytes(Payload), 0, false);
+		}
+
+		//===== "Debug"ボタン押下 =====
+		private void btn_Debug1_Click(object sender, EventArgs e) {
 		}
 	}
 }

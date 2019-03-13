@@ -1,5 +1,5 @@
 ﻿namespace RoboCar {
-	partial class Form1 {
+	partial class RoboCar {
 		/// <summary>
 		/// 必要なデザイナー変数です。
 		/// </summary>
@@ -48,11 +48,12 @@
 			this.btn_ClearList = new System.Windows.Forms.Button();
 			this.column_Time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.column_P_Score = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.btn_GetMotorParam = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btn_Debug1
 			// 
-			this.btn_Debug1.Location = new System.Drawing.Point(32, 268);
+			this.btn_Debug1.Location = new System.Drawing.Point(688, 139);
 			this.btn_Debug1.Name = "btn_Debug1";
 			this.btn_Debug1.Size = new System.Drawing.Size(75, 23);
 			this.btn_Debug1.TabIndex = 0;
@@ -63,7 +64,7 @@
 			// txtBox_MotorSpeed
 			// 
 			this.txtBox_MotorSpeed.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.txtBox_MotorSpeed.Location = new System.Drawing.Point(133, 43);
+			this.txtBox_MotorSpeed.Location = new System.Drawing.Point(122, 43);
 			this.txtBox_MotorSpeed.Name = "txtBox_MotorSpeed";
 			this.txtBox_MotorSpeed.Size = new System.Drawing.Size(100, 19);
 			this.txtBox_MotorSpeed.TabIndex = 1;
@@ -71,7 +72,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(58, 46);
+			this.label1.Location = new System.Drawing.Point(47, 46);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(69, 12);
 			this.label1.TabIndex = 2;
@@ -80,7 +81,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(239, 46);
+			this.label2.Location = new System.Drawing.Point(228, 46);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(55, 12);
 			this.label2.TabIndex = 3;
@@ -89,7 +90,7 @@
 			// txtBox_MotorSpeed_LeftTurn
 			// 
 			this.txtBox_MotorSpeed_LeftTurn.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.txtBox_MotorSpeed_LeftTurn.Location = new System.Drawing.Point(133, 87);
+			this.txtBox_MotorSpeed_LeftTurn.Location = new System.Drawing.Point(122, 81);
 			this.txtBox_MotorSpeed_LeftTurn.Name = "txtBox_MotorSpeed_LeftTurn";
 			this.txtBox_MotorSpeed_LeftTurn.Size = new System.Drawing.Size(100, 19);
 			this.txtBox_MotorSpeed_LeftTurn.TabIndex = 4;
@@ -97,7 +98,7 @@
 			// txtBox_MotorSpeed_RightTurn
 			// 
 			this.txtBox_MotorSpeed_RightTurn.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.txtBox_MotorSpeed_RightTurn.Location = new System.Drawing.Point(133, 124);
+			this.txtBox_MotorSpeed_RightTurn.Location = new System.Drawing.Point(122, 119);
 			this.txtBox_MotorSpeed_RightTurn.Name = "txtBox_MotorSpeed_RightTurn";
 			this.txtBox_MotorSpeed_RightTurn.Size = new System.Drawing.Size(100, 19);
 			this.txtBox_MotorSpeed_RightTurn.TabIndex = 5;
@@ -105,7 +106,7 @@
 			// txtBox_LrLevel_LeftTurn
 			// 
 			this.txtBox_LrLevel_LeftTurn.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.txtBox_LrLevel_LeftTurn.Location = new System.Drawing.Point(133, 160);
+			this.txtBox_LrLevel_LeftTurn.Location = new System.Drawing.Point(122, 157);
 			this.txtBox_LrLevel_LeftTurn.Name = "txtBox_LrLevel_LeftTurn";
 			this.txtBox_LrLevel_LeftTurn.Size = new System.Drawing.Size(100, 19);
 			this.txtBox_LrLevel_LeftTurn.TabIndex = 6;
@@ -113,7 +114,7 @@
 			// txtBox_LrLevel_RightTurn
 			// 
 			this.txtBox_LrLevel_RightTurn.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.txtBox_LrLevel_RightTurn.Location = new System.Drawing.Point(133, 198);
+			this.txtBox_LrLevel_RightTurn.Location = new System.Drawing.Point(122, 195);
 			this.txtBox_LrLevel_RightTurn.Name = "txtBox_LrLevel_RightTurn";
 			this.txtBox_LrLevel_RightTurn.Size = new System.Drawing.Size(100, 19);
 			this.txtBox_LrLevel_RightTurn.TabIndex = 6;
@@ -121,7 +122,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(44, 90);
+			this.label3.Location = new System.Drawing.Point(33, 84);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(83, 12);
 			this.label3.TabIndex = 2;
@@ -130,7 +131,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(37, 127);
+			this.label4.Location = new System.Drawing.Point(26, 122);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(90, 12);
 			this.label4.TabIndex = 7;
@@ -139,7 +140,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(30, 163);
+			this.label5.Location = new System.Drawing.Point(19, 160);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(97, 12);
 			this.label5.TabIndex = 8;
@@ -148,7 +149,7 @@
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(30, 201);
+			this.label6.Location = new System.Drawing.Point(19, 198);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(99, 12);
 			this.label6.TabIndex = 9;
@@ -157,7 +158,7 @@
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(239, 90);
+			this.label7.Location = new System.Drawing.Point(228, 84);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(55, 12);
 			this.label7.TabIndex = 10;
@@ -166,7 +167,7 @@
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(239, 127);
+			this.label8.Location = new System.Drawing.Point(228, 122);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(55, 12);
 			this.label8.TabIndex = 11;
@@ -175,7 +176,7 @@
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(239, 163);
+			this.label9.Location = new System.Drawing.Point(228, 160);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(49, 12);
 			this.label9.TabIndex = 12;
@@ -184,7 +185,7 @@
 			// label10
 			// 
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(239, 201);
+			this.label10.Location = new System.Drawing.Point(228, 198);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(49, 12);
 			this.label10.TabIndex = 13;
@@ -192,11 +193,11 @@
 			// 
 			// btn_Send
 			// 
-			this.btn_Send.Location = new System.Drawing.Point(165, 304);
+			this.btn_Send.Location = new System.Drawing.Point(148, 233);
 			this.btn_Send.Name = "btn_Send";
-			this.btn_Send.Size = new System.Drawing.Size(123, 49);
+			this.btn_Send.Size = new System.Drawing.Size(121, 33);
 			this.btn_Send.TabIndex = 14;
-			this.btn_Send.Text = "Send";
+			this.btn_Send.Text = "Send motor param.";
 			this.btn_Send.UseVisualStyleBackColor = true;
 			this.btn_Send.Click += new System.EventHandler(this.btn_Send_Click);
 			// 
@@ -210,9 +211,9 @@
             this.column_Prox,
             this.column_P_Score});
 			this.listView_Sensor.GridLines = true;
-			this.listView_Sensor.Location = new System.Drawing.Point(323, 33);
+			this.listView_Sensor.Location = new System.Drawing.Point(300, 33);
 			this.listView_Sensor.Name = "listView_Sensor";
-			this.listView_Sensor.Size = new System.Drawing.Size(359, 287);
+			this.listView_Sensor.Size = new System.Drawing.Size(382, 307);
 			this.listView_Sensor.TabIndex = 15;
 			this.listView_Sensor.UseCompatibleStateImageBehavior = false;
 			this.listView_Sensor.View = System.Windows.Forms.View.Details;
@@ -255,11 +256,22 @@
 			// 
 			this.column_P_Score.Text = "P-Score";
 			// 
-			// Form1
+			// btn_GetMotorParam
+			// 
+			this.btn_GetMotorParam.Location = new System.Drawing.Point(21, 233);
+			this.btn_GetMotorParam.Name = "btn_GetMotorParam";
+			this.btn_GetMotorParam.Size = new System.Drawing.Size(121, 33);
+			this.btn_GetMotorParam.TabIndex = 17;
+			this.btn_GetMotorParam.Text = "Get motor param.";
+			this.btn_GetMotorParam.UseVisualStyleBackColor = true;
+			this.btn_GetMotorParam.Click += new System.EventHandler(this.btn_GetMotorParam_Click);
+			// 
+			// RoboCar
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(797, 365);
+			this.Controls.Add(this.btn_GetMotorParam);
 			this.Controls.Add(this.btn_ClearList);
 			this.Controls.Add(this.listView_Sensor);
 			this.Controls.Add(this.btn_Send);
@@ -279,8 +291,8 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtBox_MotorSpeed);
 			this.Controls.Add(this.btn_Debug1);
-			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Name = "RoboCar";
+			this.Text = "RoboCar";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -314,6 +326,7 @@
 		private System.Windows.Forms.Button btn_ClearList;
 		private System.Windows.Forms.ColumnHeader column_Time;
 		private System.Windows.Forms.ColumnHeader column_P_Score;
+		private System.Windows.Forms.Button btn_GetMotorParam;
 	}
 }
 

@@ -69,6 +69,7 @@
 			this.txtBox_MotorSpeed.Name = "txtBox_MotorSpeed";
 			this.txtBox_MotorSpeed.Size = new System.Drawing.Size(41, 19);
 			this.txtBox_MotorSpeed.TabIndex = 1;
+			this.txtBox_MotorSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label1
 			// 
@@ -95,6 +96,7 @@
 			this.txtBox_MotorSpeed_LeftTurn.Name = "txtBox_MotorSpeed_LeftTurn";
 			this.txtBox_MotorSpeed_LeftTurn.Size = new System.Drawing.Size(41, 19);
 			this.txtBox_MotorSpeed_LeftTurn.TabIndex = 4;
+			this.txtBox_MotorSpeed_LeftTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// txtBox_MotorSpeed_RightTurn
 			// 
@@ -103,6 +105,7 @@
 			this.txtBox_MotorSpeed_RightTurn.Name = "txtBox_MotorSpeed_RightTurn";
 			this.txtBox_MotorSpeed_RightTurn.Size = new System.Drawing.Size(41, 19);
 			this.txtBox_MotorSpeed_RightTurn.TabIndex = 5;
+			this.txtBox_MotorSpeed_RightTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// txtBox_LrLevel_LeftTurn
 			// 
@@ -111,6 +114,7 @@
 			this.txtBox_LrLevel_LeftTurn.Name = "txtBox_LrLevel_LeftTurn";
 			this.txtBox_LrLevel_LeftTurn.Size = new System.Drawing.Size(41, 19);
 			this.txtBox_LrLevel_LeftTurn.TabIndex = 6;
+			this.txtBox_LrLevel_LeftTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// txtBox_LrLevel_RightTurn
 			// 
@@ -119,6 +123,7 @@
 			this.txtBox_LrLevel_RightTurn.Name = "txtBox_LrLevel_RightTurn";
 			this.txtBox_LrLevel_RightTurn.Size = new System.Drawing.Size(41, 19);
 			this.txtBox_LrLevel_RightTurn.TabIndex = 6;
+			this.txtBox_LrLevel_RightTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// label3
 			// 

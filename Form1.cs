@@ -60,8 +60,15 @@ namespace RoboCar {
 		}
 
 
-		private void AddItem_ThreadSafe(ListViewItem lvi) 
+		private void AddItem_ThreadSafe(Json_Sensor Sensor) 
 		{
+			ListViewItem lvi = new ListViewItem(DateTime.Now.ToString(@"HH\:mm\:ss"));
+			lvi.SubItems.Add(Sensor.AxlDiff.ToString("F2"));
+			lvi.SubItems.Add(Sensor.Temp.ToString("F2"));
+			lvi.SubItems.Add(Sensor.Bright.ToString("F2"));
+			lvi.SubItems.Add(Sensor.Prox.ToString("F2"));
+			lvi.SubItems.Add(Sensor.P_Score.ToString("F2"));
+
 			listView_Sensor.Items.Add(lvi);
 			listView_Sensor.EnsureVisible(listView_Sensor.Items.Count - 1);
 		}
@@ -75,7 +82,7 @@ namespace RoboCar {
 			txtBox_LrLevel_RightTurn.Text = Param.MtLv_RT.ToString();
 		}
 
-		delegate void delegate1(ListViewItem lvi);
+		delegate void delegate1(Json_Sensor Sensor);
 		delegate void delegate2(Json_Param Param);
 		private void OnRecieveMqttTopic(object sender, MqttMsgPublishEventArgs e)
 		{
@@ -85,15 +92,7 @@ namespace RoboCar {
 					ms.Position = 0;
 					var deserialized = (Json_Sensor)serializer.ReadObject(ms);
 
-					
-					ListViewItem lvi = new ListViewItem(DateTime.Now.ToString(@"HH\:mm\:ss"));
-					lvi.SubItems.Add(deserialized.AxlDiff.ToString("F2"));
-					lvi.SubItems.Add(deserialized.Temp.ToString("F2"));
-					lvi.SubItems.Add(deserialized.Bright.ToString("F2"));
-					lvi.SubItems.Add(deserialized.Prox.ToString("F2"));
-					lvi.SubItems.Add(deserialized.P_Score.ToString("F2"));
-
-					Invoke(new delegate1(AddItem_ThreadSafe), lvi);
+					Invoke(new delegate1(AddItem_ThreadSafe), deserialized);
 				}
 			}
 			else if (e.Topic == mqttTopic_Param) {

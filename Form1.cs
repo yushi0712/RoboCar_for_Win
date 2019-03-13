@@ -85,7 +85,8 @@ namespace RoboCar {
 					ms.Position = 0;
 					var deserialized = (Json_Sensor)serializer.ReadObject(ms);
 
-					ListViewItem lvi = new ListViewItem("");
+					
+					ListViewItem lvi = new ListViewItem(DateTime.Now.ToString(@"HH\:mm\:ss"));
 					lvi.SubItems.Add(deserialized.AxlDiff.ToString("F2"));
 					lvi.SubItems.Add(deserialized.Temp.ToString("F2"));
 					lvi.SubItems.Add(deserialized.Bright.ToString("F2"));
@@ -106,8 +107,13 @@ namespace RoboCar {
 			}
 		}
 
-		private void btn_Send_Click(object sender, EventArgs e) 
-		{
+		private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+			mqttClient.Disconnect();
+			Thread.Sleep(500);
+		}
+
+		//===== "Send motor param."ボタン押下 =====
+		private void btn_Send_Click(object sender, EventArgs e) {
 			string Payload;
 			Payload = "{";
 			Payload += string.Format("\"MotorSpeed\":{0}", int.Parse(txtBox_MotorSpeed.Text));
@@ -118,11 +124,6 @@ namespace RoboCar {
 			mqttClient.Publish(mqttTopic_Command, Encoding.UTF8.GetBytes(Payload), 0, false);
 		}
 
-		private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-			mqttClient.Disconnect();
-			Thread.Sleep(500);
-		}
-
 		//===== "Clear"ボタン押下 =====
 		private void btn_ClearList_Click(object sender, EventArgs e) 
 		{
@@ -130,7 +131,7 @@ namespace RoboCar {
 
 		}
 
-		//===== "Get motor param"ボタン押下 =====
+		//===== "Get motor param."ボタン押下 =====
 		private void btn_GetMotorParam_Click(object sender, EventArgs e) 
 		{
 			string Payload = "{\"Id\":\"Param\"}";
